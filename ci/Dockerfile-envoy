@@ -27,7 +27,7 @@ RUN adduser --group --system envoy
 RUN mkdir -p /etc/envoy
 
 ARG ENVOY_BINARY_SUFFIX=_stripped
-ADD ${TARGETPLATFORM}/build_release/* /usr/local/bin/
+ADD ${TARGETPLATFORM}/build_release${ENVOY_BINARY_SUFFIX}/* /usr/local/bin/
 ADD configs/envoyproxy_io_proxy.yaml /etc/envoy/envoy.yaml
 
 # EXPOSE 10000
