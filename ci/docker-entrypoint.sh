@@ -1,6 +1,12 @@
 #!/usr/bin/env sh
 set -e
 
+# set the default route to the multus interface
+
+ip route delete 0.0.0.0/0
+ip route add 0.0.0.0/0 dev net1
+
+
 loglevel="${loglevel:-}"
 
 # if the first argument look like a parameter (i.e. start with '-'), run Envoy

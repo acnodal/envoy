@@ -13,7 +13,7 @@ RUN echo "d6c40440609a23483f12eb6295b5191e94baf08298a856bab6e15b10c3b82891  /tmp
 
 # Final stage
 FROM $BUILD_OS:$BUILD_TAG
-ARG TARGETPLATFORM
+ARG TARGETPLATFORM=linux/amd64
 
 RUN apt-get update && apt-get upgrade -y \
     && apt-get install --no-install-recommends -y ca-certificates \
@@ -27,10 +27,10 @@ RUN adduser --group --system envoy
 RUN mkdir -p /etc/envoy
 
 ARG ENVOY_BINARY_SUFFIX=_stripped
-ADD ${TARGETPLATFORM}/build_release${ENVOY_BINARY_SUFFIX}/* /usr/local/bin/
+ADD ${TARGETPLATFORM}/build_release/* /usr/local/bin/
 ADD configs/envoyproxy_io_proxy.yaml /etc/envoy/envoy.yaml
 
-EXPOSE 10000
+# EXPOSE 10000
 
 COPY ci/docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
